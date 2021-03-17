@@ -3,28 +3,26 @@ from stanza.server import CoreNLPClient
 import numpy as np
 import pandas as pd
 import os
+from nltk import sent_tokenize
 import pickle
-
+from tqdm import tqdm
 class ProductionExtractor(AbstractFeatureExtractor):
 
     def __init__(self, config):
-        '''
-        Args:
-            directories: a list of directory in which all documents will be used
-                         to compute constituency.
-        '''
+
         self.rules = {}
         if config.collectProductionFromCorpus:
             with CoreNLPClient(
-                annotators=['tokenize','ssplit','pos','lemma','ner', 'parse'],
+                annotators=['tokenize','ssplit', 'parse'],
                 timeout=30000,
                 memory='16G') as client:
 
-                for directory in config.directories:
-                    for file in os.listdir(directory):
-                        filePath = os.path.join(directory, file)
-                        with open(filePath) as f:
-                            self._countRewriteRules(f.read(), client)
+                for filePath in config.pathesToFiles:
+                    with open(filePath) as f:
+                        text = [line.strip() for line in f.readlines()]
+                        for paragraph in text:
+                            for sent in sent_tokenize(paragraph):
+                                self._countRewriteRules(sent, client, filePath)
 
     def featureName(self) -> list:
         return [keyValue[0] for keyValue in sorted(self.rules.items(), key=lambda x : x[1])]
@@ -32,17 +30,20 @@ class ProductionExtractor(AbstractFeatureExtractor):
     def extract(self, data : list) -> np.array:
 
         with CoreNLPClient(
-            annotators=['parse'],
+            annotators=['tokenize','ssplit', 'parse'],
             timeout=30000,
             memory='16G') as client:
             out = []
-            for text in data:
-                annotate = client.annotate(text)
+            for text in tqdm(data):
                 array = np.zeros(len(self.rules))
                 numberOfProduction = 0
-                for sentence in annotate.sentence:
-                    numberOfProduction += self._extractProductionsAndCountLeaves(sentence.parseTree, array)
-
+                for sent in sent_tokenize(text):
+                    try:
+                        annotate = client.annotate(sent)
+                        for sentence in annotate.sentence:
+                            numberOfProduction += self._extractProductionsAndCountLeaves(sentence.parseTree, array)
+                    except:
+                        continue
                 array = array/numberOfProduction
                 out.append(array)
 
@@ -56,11 +57,14 @@ class ProductionExtractor(AbstractFeatureExtractor):
         with open(pathToProduction, 'rb') as f:
             self.rules = pickle.load(f)
 
-    def _countRewriteRules(self, text, client):
-
+    def _countRewriteRules(self, text, client, filePath):
+        try:
             annotate = client.annotate(text)
             for sentence in annotate.sentence:
                 self._addRules(sentence.parseTree)
+        except:
+            print(f"File {filePath} too long.")
+
             
     def _addRules(self, tree):
 

@@ -5,13 +5,16 @@ class FeatureConfig(object):
     
     def __init__(
         self,
-        pathToDataset,
+        init,
+        pathesToFiles,
         sourceBase = 'src.utils',
         bow = True,
-        vocabSize = 5000,
+        vocabSize = 500,
         gi = True,
         pathToGI = None,
         pos = True,
+        posBigram = False,
+        posTrigram = False,
         collectPosFromCorpus = False,
         production = True,
         collectProductionFromCorpus = False,
@@ -20,11 +23,8 @@ class FeatureConfig(object):
         sentiment = True,
         punctutation = False,
     ):
-        self.directories = []
-        for directory in os.listdir(pathToDataset):
-            path = os.path.join(pathToDataset, directory)
-            if os.path.isdir(path):
-                self.directories.append(path)
+        self.init = init
+        self.pathesToFiles = pathesToFiles
         self.vocabSize = vocabSize
         self.sourceBase = sourceBase
         self.modules = []
@@ -42,6 +42,8 @@ class FeatureConfig(object):
             self.modules.append("BOWExtractor")
         if pos:
             self.modules.append("PosExtractor")
+            self.posBigram = posBigram
+            self.posTrigram = posTrigram
         if production:
             self.modules.append("ProductionExtractor")
         if readability:

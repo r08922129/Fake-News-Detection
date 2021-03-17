@@ -9,9 +9,10 @@ class FeatureExtractor(AbstractFeatureExtractor):
         
         self.config = config
         self.extractors = []
-        for moduleName in config.modules:
-            module = importlib.import_module("{}.{}".format(config.sourceBase, moduleName))
-            self.extractors.append(getattr(module, moduleName)(config))
+        if config.init:
+            for moduleName in config.modules:
+                module = importlib.import_module("{}.{}".format(config.sourceBase, moduleName))
+                self.extractors.append(getattr(module, moduleName)(config))
         
     def featureName(self) -> list:
         names = []
@@ -34,6 +35,18 @@ class FeatureExtractor(AbstractFeatureExtractor):
         '''
         features = [extractor.extract(data) for extractor in self.extractors]
         return np.concatenate(features, axis=1)
+
+    def extractorIndices(self):
+        '''
+        Return: a dictionary with name of extractor as key and ndarray of indices as value
+        '''
+        out = {}
+        index = 0
+        for extractor in self.extractors:
+            length = len(extractor.featureName())
+            out[extractor.__class__.__name__] = np.arange(index, index+length)
+            index += length
+        return out
 
     def save(self, path):
         check_point ={

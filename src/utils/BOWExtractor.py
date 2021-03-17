@@ -1,5 +1,5 @@
 from src.utils.AbstractFeatureExtractor import AbstractFeatureExtractor
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.stem import WordNetLemmatizer 
 from nltk.corpus import wordnet
 import nltk
@@ -14,7 +14,7 @@ class BOWExtractor(AbstractFeatureExtractor):
         self.vocabSize = config.vocabSize
         self.words = {}
         self.setOfNER = set()
-        self._countBOWFromCorpus(config.directories)
+        self._countBOWFromCorpus(config.pathesToFiles)
 
     def featureName(self) -> list:
         return [keyValue[0] for keyValue in sorted(self.words.items(), key=lambda x : x[1])]
@@ -38,13 +38,12 @@ class BOWExtractor(AbstractFeatureExtractor):
 
         return np.array(out)
 
-    def _countBOWFromCorpus(self, directories):
+    def _countBOWFromCorpus(self, pathesToFiles):
         corpus = []
-        for directory in directories:
-            for file in os.listdir(directory):
-                filePath = os.path.join(directory, file)
-                with open(filePath) as f:
-                    corpus.append(f.read())
+        for filePath in pathesToFiles:
+            with open(filePath) as f:
+                corpus.append(f.read())
+
         # count NER
         nlp = stanza.Pipeline(lang='en', processors='tokenize, ner')
         for doc in corpus:
@@ -54,13 +53,21 @@ class BOWExtractor(AbstractFeatureExtractor):
                     if token.ner is not "O":
                         self.setOfNER.add(token.text)
 
-        vectorizer = CountVectorizer(stop_words='english', tokenizer=self.tokenizer)
+        vectorizer = TfidfVectorizer(stop_words='english', tokenizer=self.tokenizer)
         X = vectorizer.fit_transform(corpus)
         words = vectorizer.get_feature_names()
         # words ordered by count.
-        words = np.array(words, dtype=str)[X.toarray().sum(axis=0).argsort()][:self.vocabSize]
-        for index, word in enumerate(words):
-            self.words[word] = index
+        words = np.array(words, dtype=str)[vectorizer.idf_.argsort()][::-1]
+        index = 0
+        count = self.vocabSize
+        for word in words:
+            if count:
+                if word not in self.setOfNER:
+                    self.words[word] = index
+                    index += 1
+                    count -= 1
+            else:
+                break
 
     def _get_wordnet_pos(self, tag):
 
@@ -85,9 +92,9 @@ class BOWExtractor(AbstractFeatureExtractor):
         taggedWords = nltk.pos_tag(words)
         out = []
         for wordAndTag in taggedWords:
-            wordnet_pos = self._get_wordnet_pos(wordAndTag[1]) or wordnet.NOUN
-            if wordAndTag[0] not in self.setOfNER:
-                out.append(lemmatizer.lemmatize(wordAndTag[0], pos=wordnet_pos))
-            else:
+            if wordAndTag[0] in self.setOfNER:
                 out.append(wordAndTag[0])
+            else:
+                wordnet_pos = self._get_wordnet_pos(wordAndTag[1]) or wordnet.NOUN
+                out.append(lemmatizer.lemmatize(wordAndTag[0], pos=wordnet_pos))
         return out
