@@ -43,4 +43,3 @@ class GIExtractor(AbstractFeatureExtractor):
 
             out.append(np.array(count))
         return np.array(out)
-                

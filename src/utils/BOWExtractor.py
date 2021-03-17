@@ -5,6 +5,7 @@ from nltk.corpus import wordnet
 import nltk
 import os
 import numpy as np
+import stanza
 
 class BOWExtractor(AbstractFeatureExtractor):
 
@@ -12,6 +13,7 @@ class BOWExtractor(AbstractFeatureExtractor):
 
         self.vocabSize = config.vocabSize
         self.words = {}
+        self.setOfNER = set()
         self._countBOWFromCorpus(config.directories)
 
     def featureName(self) -> list:
@@ -43,6 +45,14 @@ class BOWExtractor(AbstractFeatureExtractor):
                 filePath = os.path.join(directory, file)
                 with open(filePath) as f:
                     corpus.append(f.read())
+        # count NER
+        nlp = stanza.Pipeline(lang='en', processors='tokenize, ner')
+        for doc in corpus:
+            doc = nlp(doc)
+            for sentence in doc.sentences:
+                for token in sentence.tokens:
+                    if token.ner is not "O":
+                        self.setOfNER.add(token.text)
 
         vectorizer = CountVectorizer(stop_words='english', tokenizer=self.tokenizer)
         X = vectorizer.fit_transform(corpus)
@@ -76,5 +86,8 @@ class BOWExtractor(AbstractFeatureExtractor):
         out = []
         for wordAndTag in taggedWords:
             wordnet_pos = self._get_wordnet_pos(wordAndTag[1]) or wordnet.NOUN
-            out.append(lemmatizer.lemmatize(wordAndTag[0], pos=wordnet_pos))
+            if wordAndTag[0] not in self.setOfNER:
+                out.append(lemmatizer.lemmatize(wordAndTag[0], pos=wordnet_pos))
+            else:
+                out.append(wordAndTag[0])
         return out

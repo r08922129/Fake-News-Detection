@@ -32,7 +32,7 @@ class ProductionExtractor(AbstractFeatureExtractor):
     def extract(self, data : list) -> np.array:
 
         with CoreNLPClient(
-            annotators=['tokenize','ssplit','pos','lemma','ner', 'parse'],
+            annotators=['parse'],
             timeout=30000,
             memory='16G') as client:
             out = []
