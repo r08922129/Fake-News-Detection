@@ -2,3 +2,8 @@ data/FakeNewsDatasets
 src/utils/__pycache__
 .ipynb_checkpoints
 Untitled.ipynb
+java
+save/fake_feature.pkl
+save/legit_feature.pkl
+save/state_fakenewsnet.pkl
+save/state_fakenewsnet_backup.pkl

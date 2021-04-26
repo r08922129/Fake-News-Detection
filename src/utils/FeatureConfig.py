@@ -7,6 +7,7 @@ class FeatureConfig(object):
         self,
         init,
         pathesToFiles,
+        pathesToParseTree,
         sourceBase = 'src.utils',
         bow = True,
         vocabSize = 500,
@@ -25,6 +26,7 @@ class FeatureConfig(object):
     ):
         self.init = init
         self.pathesToFiles = pathesToFiles
+        self.pathesToParseTree = pathesToParseTree
         self.vocabSize = vocabSize
         self.sourceBase = sourceBase
         self.modules = []
