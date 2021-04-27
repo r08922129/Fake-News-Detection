@@ -1,2 +1,0 @@
-{"ROOT": ["S-1"], "S-1": ["NP-1", "VP-1"], "NP-1": ["DT-1", "NN-1"], "VP-1": ["VBZ-1", "ADVP-1", "ADVP-2", "VP-2"], "DT-1": ["This"], "NN-1": ["website"], "VBZ-1": ["is"], "ADVP-2": ["RB-3"], "VP-2": ["VBN-1"], "RB-3": ["actively"], "VBN-1": ["maintained"]}
-{"ROOT": ["S-1"], "S-1": ["NP-1", "VP-1"], "NP-1": ["DT-1", "NN-1", "CC-1", "NNS-1"], "VP-1": ["MD-1", "VP-2"], "DT-1": ["Some"], "NN-1": ["material"], "CC-1": ["and"], "NNS-1": ["features"], "MD-1": ["may"], "VP-2": ["VB-1", "ADJP-1"], "VB-1": ["be"], "ADJP-1": ["JJ-1"], "JJ-1": ["unavailable"]}

@@ -1,2 +1,0 @@
-{"ROOT": ["NP-1"], "NP-1": ["NN-1", "NN-2"], "NN-2": ["E1"]}
-{"ROOT": ["NP-1"], "NP-1": ["NP-2", "CC-1", "NP-3"], "NP-3": ["NP-4", "PP-1"], "CC-1": ["and"], "NNP-2": ["Clinton"], "NP-4": ["DT-1", "NNP-3"], "PP-1": ["IN-1", "NP-5"], "DT-1": ["the"], "NNP-3": ["Grandmother"], "IN-1": ["of"], "NP-5": ["DT-2", "NNPS-1"], "DT-2": ["All"], "NNPS-1": ["Scandals"]}

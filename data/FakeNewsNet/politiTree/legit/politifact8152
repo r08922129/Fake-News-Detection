@@ -1,0 +1,2 @@
+{"ROOT": ["NP-1"], "NP-1": ["NNP-1", "NNP-2"], "NNP-2": ["Klepper"]}
+{"ROOT": ["NP-1"], "NP-1": ["NNP-1"], "NNP-1": ["Contributor"]}

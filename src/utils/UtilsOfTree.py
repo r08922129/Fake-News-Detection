@@ -34,16 +34,17 @@ def core_nlp_tree_to_json(tree):
 
 def collect_productions_from_json_tree(tree):
 
-    def _getProduction(self, lhs, rhs):
-        return f"{lhs} -> {rhs)}"
+    def _getProduction(lhs, rhs):
+        return f"{lhs}->{rhs}"
 
     def dfs(root, tree, productions):
 
         if root in tree:
+            lhs = re.sub(r'-\d+', '', root)
             if tree[root][0] not in tree:
                 rhs = "[END]"
             else:
-                rhs = " ".join([re.sub(r"-/d+", '', child) for child in tree[root]])
+                rhs = " ".join([re.sub(r"-\d+", '', child) for child in tree[root]])
 
             production = _getProduction(lhs, rhs)
             if production not in productions:
@@ -54,3 +55,14 @@ def collect_productions_from_json_tree(tree):
     productions = set()
     dfs("ROOT", tree, productions)
     return productions
+
+def computePCFG(productions, pcfg):
+
+    for production in productions:
+        lhs, rhs = production.split('->')
+        if lhs not in pcfg:
+            pcfg[lhs] = {}
+        if rhs not in pcfg[lhs]:
+            pcfg[lhs][rhs] = 1
+        else:
+            pcfg[lhs][rhs] += 1

@@ -8,3 +8,5 @@ save/legit_feature.pkl
 save/state_fakenewsnet.pkl
 save/state_fakenewsnet_backup.pkl
 corenlp*
+article-to-features-fakenewsnet.ipynb
+article-to-features-Copy1.ipynb
