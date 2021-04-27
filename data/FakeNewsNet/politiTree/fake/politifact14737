@@ -1,0 +1,1 @@
+{"ROOT": ["NP-1"], "NP-1": ["NP-2", ":-1", "S-1"], "NP-2": ["NNP-1"], ":-1": [":"], "S-1": ["NP-3", "NP-4"], "NNP-1": ["BREAKING"], "NP-4": ["PRP$-1", "NML-2", "NN-1"], "NML-2": ["NNP-4", "NNP-5", "NNP-6"], "NNS-1": ["Issues"], "PRP$-1": ["Its"], "NN-1": ["Ever"], "NNP-6": ["Warrant"]}

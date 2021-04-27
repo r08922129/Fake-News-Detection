@@ -1,0 +1,8 @@
+{"ROOT": ["S-1"], "S-1": ["NP-1", "VP-1", ".-1"], "NP-1": ["EX-1"], "VP-1": ["VBP-1", "NP-2"], ".-1": ["."], "EX-1": ["There"], "VBP-1": ["are"], "NP-2": ["NP-3", "PP-1"], "NP-3": ["QP-1", "NNS-1"], "PP-1": ["IN-1", "NP-4"], "QP-1": ["RB-1", "CD-1"], "NNS-1": ["troops"], "IN-1": ["in"], "NP-4": ["NNP-1"], "RB-1": ["approximately"], "CD-1": ["169,000"], "NNP-1": ["Iraq"]}
+{"ROOT": ["SBARQ-1"], "SBARQ-1": ["WHNP-1", "SQ-1", ".-1"], "WHNP-1": ["WHADJP-1", "NML-1"], "SQ-1": ["MD-1", "NP-1", "VP-1"], ".-1": ["?"], "WHADJP-1": ["WRB-1", "JJ-1"], "NML-1": ["NNS-1"], "MD-1": ["would"], "NP-1": ["PRP-1"], "VP-1": ["VB-1", "ADVP-1"], "WRB-1": ["How"], "JJ-1": ["many"], "NNS-1": ["troops"], "PRP-1": ["you"], "VB-1": ["leave"], "ADVP-1": ["RB-1"], "RB-1": ["behind"]}
+{"ROOT": ["NP-1"], "NP-1": ["NNP-1"], "NNP-1": ["Zero"]}
+{"ROOT": ["FRAG-1"], "FRAG-1": [".-1"], ".-1": ["?"]}
+{"ROOT": ["FRAG-1"], "FRAG-1": ["NP-1", "VP-1", ".-1"], "NP-1": ["CD-1", "NN-1"], "VP-1": ["VBG-1", "PRT-1", "PP-1"], ".-1": ["?"], "CD-1": ["One"], "NN-1": ["brigade"], "VBG-1": ["OR"], "PRT-1": ["RP-1"], "PP-1": ["IN-1", "NP-2"], "RP-1": ["up"], "IN-1": ["to"], "NP-2": ["CD-2", "NN-2", "NNS-1"], "CD-2": ["90,000"], "NN-2": ["support"], "NNS-1": ["troops"]}
+{"ROOT": ["FRAG-1"], "FRAG-1": ["NP-1"], "NP-1": ["CD-1"], "CD-1": ["18"]}
+{"ROOT": ["FRAG-1"], "FRAG-1": [".-1"], ".-1": ["?"]}
+{"ROOT": ["FRAG-1"], "FRAG-1": [".-1"], ".-1": ["?"]}

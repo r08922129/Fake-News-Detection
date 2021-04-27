@@ -1,0 +1,2 @@
+{"ROOT": ["SQ-1"], "SQ-1": ["VP-1", ".-1"], "VP-1": ["VB-1", "NP-1"], ".-1": ["?"], "VB-1": ["Need"], "NP-1": ["NN-1"], "NN-1": ["help"]}
+{"ROOT": ["S-1"], "S-1": ["VP-1"], "VP-1": ["VB-1", "NP-1", "PP-1"], "VB-1": ["Contact"], "NP-1": ["DT-1", "NNP-1", "NNP-2"], "PP-1": ["IN-1", "NP-2"], "DT-1": ["the"], "NNP-2": ["Hotline"], "IN-1": ["at"], "NP-2": ["NN-1", "CC-1", "NN-2"], "NN-2": ["hotline@cqrollcall.com"], "CC-1": ["or"]}
