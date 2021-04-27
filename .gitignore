@@ -7,3 +7,4 @@ save/fake_feature.pkl
 save/legit_feature.pkl
 save/state_fakenewsnet.pkl
 save/state_fakenewsnet_backup.pkl
+corenlp*
