@@ -13,20 +13,21 @@ class ReadabilityExtractor(AbstractFeatureExtractor):
     def featureName(self) -> list:
         
         return [
-          'FleschReadingEaseIndex',
-         'FleschKincaidGradeLevel',
+          'FleschKincaidGradeLevel',
           'AutomatedReadabilityIndex',
-          'GunningFoxIndex',
-          'ColemanLiauIndex',
-          '#Words',
-          '#Syllables',
-          '#Polysyllables',
-          '#Chars',
-          '#ComplexWords'
+          'Coleman-Liau',
+          'FleschReadingEase',
+          'GunningFogIndex',
+          'LIX',
+          'SMOGIndex',
+          'RIX',
+          'DaleChallIndex'
           ]
     
     def extract(self, data : list) -> np.array:
 
-        array = list(readability.getmeasures("test", lang='en')['readability grades'].values())
+        array = []
+        for text in data:
+            array.append(list(readability.getmeasures(text, lang='en')['readability grades'].values()))
 
         return np.array(array)
